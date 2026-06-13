@@ -1,38 +1,383 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
 <head>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOIR | 极简美学空间</title>
     <style>
-        /* 强制使用现代无衬线字体，并放大基准字号 */
-        body { 
-            background-color: #050505; 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            font-size: 18px; 
-            line-height: 1.75;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --gold: #d4af37;
+            --gray: #666666;
+            --light-gray: #999999;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            backdrop-filter: blur(8px);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, var(--white), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 首屏英雄区 */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 0 8%;
+            position: relative;
+        }
+
+        .hero-text {
+            z-index: 2;
+        }
+
+        .hero-tag {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            max-width: 400px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 14px 48px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gold);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .hero-btn:hover {
+            color: var(--black);
+        }
+
+        .hero-btn:hover::before {
+            left: 0;
+        }
+
+        .hero-image {
+            position: relative;
+            height: 85vh;
+            background-image: url('https://aka.doubaocdn.com/s/vtXp1wiyBk');
+            background-size: cover;
+            background-position: center top;
+            mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+        }
+
+        /* 理念区 */
+        .philosophy {
+            padding: 8rem 8%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .philosophy-text {
+            font-size: 2.5rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            color: var(--white);
+        }
+
+        /* 作品展示区 */
+        .gallery {
+            padding: 0 8% 8rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            font-size: 1.2rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-desc {
+            font-size: 0.85rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        /* 页脚 */
+        footer {
+            padding: 4rem 8%;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            color: var(--gray);
+            letter-spacing: 1px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 992px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 8rem;
+            }
+            .hero-title {
+                font-size: 3rem;
+            }
+            .hero-image {
+                height: 50vh;
+                margin-top: 3rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .philosophy-text {
+                font-size: 1.5rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden">
-
-    <aside class="w-72 bg-[#0d0d0d] p-5 border-r border-[#202020]">
-        <div class="text-[15px] font-medium cursor-pointer hover:bg-[#1a1a1a] p-3 rounded-xl transition">
-            + 新聊天
+<body>
+    <!-- 导航 -->
+    <nav>
+        <div class="logo">NOIR</div>
+        <div class="nav-links">
+            <a href="#home">首页</a>
+            <a href="#philosophy">理念</a>
+            <a href="#gallery">作品</a>
+            <a href="#contact">联系</a>
         </div>
-    </aside>
+    </nav>
 
-    <main class="flex-1 flex flex-col items-center justify-center p-6">
-        <h1 class="text-5xl font-semibold mb-16 tracking-tighter">我们先从哪里开始呢？</h1>
-        
-        <div class="w-full max-w-3xl">
-            <div class="bg-[#1e1e1e] rounded-3xl p-6 shadow-2xl border border-[#333]">
-                <input type="text" placeholder="输入问题..." 
-                       class="w-full bg-transparent outline-none text-xl placeholder-[#555] text-white">
+    <!-- 首屏 -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <div class="hero-tag">Minimal Aesthetics</div>
+            <h1 class="hero-title">
+                定义<br>
+                不被定义
+            </h1>
+            <p class="hero-desc">
+                在黑与白的边界，探索美学的无限可能。拒绝平庸，每一处细节都为独特而生。
+            </p>
+            <a href="#gallery" class="hero-btn">探索作品</a>
+        </div>
+        <div class="hero-image"></div>
+    </section>
+
+    <!-- 理念区 -->
+    <section class="philosophy" id="philosophy">
+        <div class="section-title">Philosophy</div>
+        <p class="philosophy-text">
+            "真正的高级，是删繁就简后的力量。<br>
+            在极致的纯粹里，遇见最真实的自己。"
+        </p>
+    </section>
+
+    <!-- 作品展示 -->
+    <section class="gallery" id="gallery">
+        <div class="section-title" style="text-align: center; margin-bottom: 4rem;">Gallery Collection</div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://aka.doubaocdn.com/s/50rR1wiyjF" alt="作品1">
+                <div class="gallery-overlay">
+                    <div class="gallery-title">纯白叙事</div>
+                    <div class="gallery-desc">WHITE SERIES</div>
+                </div>
             </div>
-            <div class="text-center mt-6 text-sm text-[#444]">
-                NexAI 旨在提供更舒适的交互体验。
+            <div class="gallery-item">
+                <img src="https://aka.doubaocdn.com/s/bnGb1wixwz" alt="作品2">
+                <div class="gallery-overlay">
+                    <div class="gallery-title">光影肖像</div>
+                    <div class="gallery-desc">LIGHT & SHADOW</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://aka.doubaocdn.com/s/M7Gk1wixmO" alt="作品3">
+                <div class="gallery-overlay">
+                    <div class="gallery-title">极简风尚</div>
+                    <div class="gallery-desc">MINIMAL STYLE</div>
+                </div>
             </div>
         </div>
-    </main>
+    </section>
 
+    <!-- 页脚 -->
+    <footer id="contact">
+        <p class="footer-text">NOIR © 2024 | 极简美学空间</p>
+    </footer>
 </body>
 </html>
