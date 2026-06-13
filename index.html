@@ -1,30 +1,47 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="dark">
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>企业内部管理系统</title>
+    <style>
+        body { background-color: #050505; color: #ececec; }
+        /* 侧边栏质感：更深的黑灰 */
+        .sidebar { background: #0d0d0d; border-right: 1px solid #202020; }
+        /* 输入框质感：增加内阴影与细腻边框 */
+        .input-glow { 
+            background: #1e1e1e; 
+            border: 1px solid #333; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); 
+        }
+        .input-glow:focus-within { border-color: #4a4a4a; }
+    </style>
 </head>
-<body class="bg-slate-100 flex items-center justify-center min-h-screen">
+<body class="flex h-screen overflow-hidden font-sans">
 
-    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm border border-slate-200">
-        <div class="mb-8 text-center">
-            <div class="w-12 h-12 bg-blue-600 rounded-xl mx-auto mb-4 flex items-center justify-center text-white font-bold text-2xl">IT</div>
-            <h2 class="text-2xl font-bold text-slate-800">系统登录</h2>
-            <p class="text-slate-500 text-sm mt-1">请输入您的凭据以访问内部资源</p>
+    <!-- 侧边栏 -->
+    <aside class="sidebar w-64 p-3 flex flex-col">
+        <div class="hover:bg-[#1a1a1a] p-2 rounded-lg cursor-pointer transition text-sm flex items-center gap-2">
+            <span>+</span> 新聊天
         </div>
+        <div class="mt-4 text-xs text-[#666] px-2">历史记录</div>
+    </aside>
 
-        <form class="space-y-4">
-            <input type="text" placeholder="员工编号" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
-            <input type="password" placeholder="通行密钥" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition">
-            
-            <button type="button" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition active:scale-[0.98]">
-                安全登录
-            </button>
-        </form>
-
-        <div class="mt-6 text-center text-xs text-slate-400">
-            © 2026 企业IT支持部 - 仅限内部授权访问
+    <!-- 主聊天区 -->
+    <main class="flex-1 flex flex-col items-center justify-center relative">
+        <h1 class="text-3xl font-semibold mb-12 tracking-tight text-[#d1d1d1]">我们先从哪里开始呢？</h1>
+        
+        <!-- 高级输入框区域 -->
+        <div class="w-full max-w-2xl px-4">
+            <div class="input-glow rounded-2xl p-4 flex items-center transition-all duration-300">
+                <input type="text" placeholder="有问题，尽管问" class="w-full bg-transparent outline-none text-[15px] placeholder-[#666] px-2">
+                <button class="p-2 hover:bg-[#333] rounded-full transition">
+                    <svg class="w-5 h-5 text-[#8e8e8e]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14a3 3 0 100-6 3 3 0 000 6z"/><path fill-rule="evenodd" d="M12 2a10 10 0 100 20 10 10 0 000-20zM4 12a8 8 0 1116 0 8 8 0 01-16 0z" clip-rule="evenodd"/></svg>
+                </button>
+            </div>
+            <div class="text-center mt-4 text-[11px] text-[#555]">
+                NexAI 可能出现错误。请核实重要信息。
+            </div>
         </div>
-    </div>
+    </main>
+
 </body>
 </html>
